@@ -5,6 +5,8 @@ add_library(timeit-lib STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/chronotimer.cpp
 )
 
+add_library(timeit ALIAS timeit-lib)
+
 target_include_directories(timeit-lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

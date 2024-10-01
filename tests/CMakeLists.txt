@@ -21,7 +21,7 @@ target_include_directories(timeit-tests PRIVATE
 )
 
 target_link_libraries(timeit-tests PRIVATE
-    timeit-lib
+    timeit
     GTest::gtest_main
 )
 
