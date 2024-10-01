@@ -10,3 +10,10 @@ add_library(timeit ALIAS timeit-lib)
 target_include_directories(timeit-lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+message(STATUS ${CMAKE_INSTALL_INCLUDEDIR})
+message(STATUS ${CMAKE_CURRENT_LIST_DIR})
+
+target_include_directories(timeit-lib PUBLIC
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>)
