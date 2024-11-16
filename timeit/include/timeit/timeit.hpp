@@ -1,8 +1,8 @@
 #ifndef _TIMEIT_CUH_
 #define _TIMEIT_CUH_
 
-#include "chronotimer.hpp"  // IWYU pragma: export
 #include "ktimer.hpp"
+#include "timeit/timers/chronotimer.hpp"  // IWYU pragma: export
 
 #include <sys/types.h>
 #include <vector>

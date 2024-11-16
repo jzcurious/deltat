@@ -1,4 +1,4 @@
-#include "timeit.hpp"
+#include "timeit/timeit.hpp"
 
 #include "gtest/gtest.h"
 #include <chrono>
