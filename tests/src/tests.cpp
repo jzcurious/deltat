@@ -1,5 +1,5 @@
-#include "timeit/timeit.hpp"
-#include "timeit/timers/chronotimer.hpp"
+#include "deltat/timeit.hpp"
+#include "deltat/timers/chronotimer.hpp"
 
 #include "gtest/gtest.h"
 #include <chrono>
