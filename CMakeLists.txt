@@ -8,3 +8,4 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -O3")
 
 add_subdirectory(timeit)
 add_subdirectory(tests)
+add_subdirectory(samples)
