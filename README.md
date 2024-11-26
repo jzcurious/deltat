@@ -5,8 +5,8 @@ A simple library for measuring code execution time
 ### Example of use
 
 ```C++
-#include "timeit/timeit.hpp"
-#include "timeit/timers/chronotimer.hpp"
+#include "deltat/timeit.hpp"
+#include "deltat/timers/chronotimer.hpp"
 #include <iostream>
 #include <ratio>
 
