@@ -9,7 +9,7 @@ double sum(Ts... args) {
 }
 
 int main() {
-  TimeIt ti(sum<int, int, float, double, short>, ChronoTimer{}, 3, 1);
+  dt::TimeIt ti(sum<int, int, float, double, short>, dt::ChronoTimer{}, 3, 1);
   ti.run(1, 2, 3, 4, 5);
   ti.run(5, 4, 3, 2, 1);
 

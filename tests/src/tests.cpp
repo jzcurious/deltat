@@ -15,7 +15,7 @@ void sleep_n(size_t n) {
 
 #define __sleep_test(_n, _units, _rtol, _atol)                                           \
   TEST(SleepTest, _n##_units##sec) {                                                     \
-    TimeIt ti(sleep_n<_units>, ChronoTimer{}, 3, 1);                                     \
+    dt::TimeIt ti(sleep_n<_units>, dt::ChronoTimer{}, 3, 1);                             \
     EXPECT_NEAR(ti.run(_n) * _units::den, _n, _n * _rtol + _atol);                       \
   }
 

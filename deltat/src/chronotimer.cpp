@@ -1,5 +1,7 @@
 #include "deltat/timers/chronotimer.hpp"
 
+using namespace dt;
+
 static double time_placeholder = 0;
 
 ChronoTimer::ChronoTimer()

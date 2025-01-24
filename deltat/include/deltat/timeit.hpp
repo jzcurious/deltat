@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <vector>
 
+namespace dt {
+
 template <class TargetT, TimerKind TimerT>
 class TimeIt final {
  private:
@@ -48,5 +50,7 @@ class TimeIt final {
     _measurements.clear();
   }
 };
+
+}  // namespace dt
 
 #endif  // _TIMEIT_CUH_

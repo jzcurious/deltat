@@ -3,6 +3,8 @@
 
 #include <chrono>
 
+namespace dt {
+
 class ChronoTimer final {
   using clock_t = std::chrono::high_resolution_clock;
   using time_point_t = std::chrono::time_point<clock_t>;
@@ -18,5 +20,7 @@ class ChronoTimer final {
   ChronoTimer(double& time);
   ~ChronoTimer();
 };
+
+}  // namespace dt
 
 #endif  // _CHRONOTIMER_HPP_
