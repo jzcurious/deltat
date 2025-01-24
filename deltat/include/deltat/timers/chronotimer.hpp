@@ -1,5 +1,5 @@
-#ifndef _CRONOTIMER_HPP_
-#define _CRONOTIMER_HPP_
+#ifndef _CHRONOTIMER_HPP_
+#define _CHRONOTIMER_HPP_
 
 #include <chrono>
 
@@ -19,4 +19,4 @@ class ChronoTimer final {
   ~ChronoTimer();
 };
 
-#endif  // _CRONOTIMER_HPP_
+#endif  // _CHRONOTIMER_HPP_
