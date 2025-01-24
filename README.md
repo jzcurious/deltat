@@ -20,7 +20,7 @@ int main() {
   ti.run(1, 2, 3, 4, 5);
   ti.run(5, 4, 3, 2, 1);
 
-  for (auto t : ti.measurements()) {
+  for (auto t : ti.metrics()) {
     std::cout << t * std::milli::den << "ms\n";
   }
 

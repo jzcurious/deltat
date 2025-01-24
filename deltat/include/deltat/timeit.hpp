@@ -14,7 +14,7 @@ class TimeIt final {
   const TargetT& _target;
   const uint _nwarmups;
   const uint _nrepeats;
-  std::vector<double> _measurements;
+  std::vector<double> _metrics;
 
  public:
   TimeIt(const TargetT& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
@@ -33,21 +33,21 @@ class TimeIt final {
       _target(std::forward<ArgTs>(args)...);
     }
 
-    _measurements.push_back(total / _nrepeats);
+    _metrics.push_back(total / _nrepeats);
     return last();
   }
 
   double last() const {
-    if (_measurements.empty()) return -1.0f;
-    return _measurements.back();
+    if (_metrics.empty()) return -1.0f;
+    return _metrics.back();
   }
 
-  const std::vector<double>& measurements() const {
-    return _measurements;
+  const std::vector<double>& metrics() const {
+    return _metrics;
   }
 
   void reset() {
-    _measurements.clear();
+    _metrics.clear();
   }
 };
 
