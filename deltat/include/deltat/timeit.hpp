@@ -6,6 +6,29 @@
 #include <sys/types.h>
 #include <vector>
 
+namespace dt::detail {
+
+template <class T>
+concept TimeItKind = requires { typename T::TimeItFeature{}; };
+
+template <typename T>
+concept TupleLike = requires(T a) {
+  std::tuple_size<T>::value;
+  std::get<0>(a);
+};
+
+template <TupleLike T>
+auto make_indices_for_tuple(T) {
+  return std::make_index_sequence<std::tuple_size_v<T>>{};
+}
+
+template <TimeItKind TimeItT, class TupleT, std::size_t... I>
+void apply_timeit(TimeItT& timeit, const TupleT& args_tuple, std::index_sequence<I...>) {
+  timeit.run(std::get<I>(args_tuple)...);
+}
+
+}  // namespace dt::detail
+
 namespace dt {
 
 template <class TargetT, TimerKind TimerT>
@@ -17,6 +40,8 @@ class TimeIt final {
   std::vector<double> _metrics;
 
  public:
+  struct TimeItFeature {};
+
   TimeIt(const TargetT& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
       : _target(target)
       , _nwarmups(nwarmups)
@@ -35,6 +60,11 @@ class TimeIt final {
 
     _metrics.push_back(total / _nrepeats);
     return last();
+  }
+
+  template <detail::TupleLike ArgTupleT>
+  double run(ArgTupleT& args) {
+    return detail::apply_timeit(*this, args, detail::make_indices_for_tuple(args));
   }
 
   double last() const {
