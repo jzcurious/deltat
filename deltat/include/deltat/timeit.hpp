@@ -34,7 +34,7 @@ namespace dt {
 template <class TargetT, TimerKind TimerT>
 class TimeIt final {
  private:
-  const TargetT& _target;
+  TargetT _target;
   const uint _nwarmups;
   const uint _nrepeats;
   bool _warmed_up;
@@ -43,7 +43,8 @@ class TimeIt final {
  public:
   struct TimeItFeature {};
 
-  TimeIt(const TargetT& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
+  template <class TargetT_>
+  TimeIt(TargetT_&& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
       : _target(target)
       , _nwarmups(nwarmups)
       , _nrepeats(nrepeats)
@@ -86,6 +87,10 @@ class TimeIt final {
     _metrics.clear();
   }
 };
+
+template <class TargetT_, TimerKind TimerT>
+TimeIt(
+    TargetT_&& target, TimerT, uint nrepeats, uint nwarmups) -> TimeIt<TargetT_, TimerT>;
 
 }  // namespace dt
 
