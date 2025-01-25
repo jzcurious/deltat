@@ -44,7 +44,7 @@ class TimeIt final {
   struct TimeItFeature {};
 
   template <class TargetT_>
-  TimeIt(TargetT_&& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
+  TimeIt(TargetT_&& target, TimerT, uint nrepeats = 3, uint nwarmups = 1)
       : _target(target)
       , _nwarmups(nwarmups)
       , _nrepeats(nrepeats)
@@ -89,8 +89,8 @@ class TimeIt final {
 };
 
 template <class TargetT_, TimerKind TimerT>
-TimeIt(
-    TargetT_&& target, TimerT, uint nrepeats, uint nwarmups) -> TimeIt<TargetT_, TimerT>;
+TimeIt(TargetT_&& target, TimerT, uint nrepeats = 3, uint nwarmups = 1)
+    -> TimeIt<TargetT_, TimerT>;
 
 }  // namespace dt
 
