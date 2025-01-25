@@ -23,8 +23,8 @@ auto make_indices_for_tuple(T) {
 }
 
 template <TimeItKind TimeItT, class TupleT, std::size_t... I>
-void apply_timeit(TimeItT& timeit, const TupleT& args_tuple, std::index_sequence<I...>) {
-  timeit.run(std::get<I>(args_tuple)...);
+void apply_timeit(TimeItT& timeit, TupleT&& args_tuple, std::index_sequence<I...>) {
+  timeit.run(std::get<I>(std::forward<TupleT>(args_tuple))...);
 }
 
 }  // namespace dt::detail
@@ -63,8 +63,9 @@ class TimeIt final {
   }
 
   template <detail::TupleLike ArgTupleT>
-  double run(ArgTupleT& args) {
-    return detail::apply_timeit(*this, args, detail::make_indices_for_tuple(args));
+  double run(ArgTupleT&& args) {
+    return detail::apply_timeit(
+        *this, std::forward<ArgTupleT>(args), detail::make_indices_for_tuple(args));
   }
 
   double last() const {
