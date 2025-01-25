@@ -37,6 +37,7 @@ class TimeIt final {
   const TargetT& _target;
   const uint _nwarmups;
   const uint _nrepeats;
+  bool _warmed_up;
   std::vector<double> _metrics;
 
  public:
@@ -45,12 +46,16 @@ class TimeIt final {
   TimeIt(const TargetT& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
       : _target(target)
       , _nwarmups(nwarmups)
-      , _nrepeats(nrepeats) {}
+      , _nrepeats(nrepeats)
+      , _warmed_up(not nwarmups) {}
 
   template <class... ArgTs>
     requires(std::invocable<TargetT, ArgTs...>)
   double run(ArgTs&&... args) {
-    for (uint i = 0; i < _nwarmups; ++i) _target(std::forward<ArgTs>(args)...);
+    if (not _warmed_up) {
+      for (uint i = 0; i < _nwarmups; ++i) _target(std::forward<ArgTs>(args)...);
+      _warmed_up = true;
+    }
 
     double total = 0;
     for (uint i = 0; i < _nrepeats; ++i) {
