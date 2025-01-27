@@ -23,8 +23,8 @@ auto make_indices_for_tuple(T) {
 }
 
 template <TimeItKind TimeItT, class TupleT, std::size_t... I>
-void apply_timeit(TimeItT& timeit, TupleT&& args_tuple, std::index_sequence<I...>) {
-  timeit.run(std::get<I>(std::forward<TupleT>(args_tuple))...);
+double apply_timeit(TimeItT& timeit, TupleT&& args_tuple, std::index_sequence<I...>) {
+  return timeit.run(std::get<I>(std::forward<TupleT>(args_tuple))...);
 }
 
 }  // namespace dt::detail
@@ -44,7 +44,7 @@ class TimeIt final {
   struct TimeItFeature {};
 
   template <class TargetT_>
-  TimeIt(TargetT_&& target, TimerT, uint nrepeats = 3, uint nwarmups = 1)
+  TimeIt(TargetT_&& target, TimerT, uint nrepeats = 1, uint nwarmups = 0)
       : _target(target)
       , _nwarmups(nwarmups)
       , _nrepeats(nrepeats)
@@ -68,7 +68,8 @@ class TimeIt final {
     return last();
   }
 
-  template <detail::TupleLike ArgTupleT>
+  template <class ArgTupleT>
+    requires detail::TupleLike<std::decay_t<ArgTupleT>>
   double run(ArgTupleT&& args) {
     return detail::apply_timeit(
         *this, std::forward<ArgTupleT>(args), detail::make_indices_for_tuple(args));
@@ -89,8 +90,8 @@ class TimeIt final {
 };
 
 template <class TargetT_, TimerKind TimerT>
-TimeIt(TargetT_&& target, TimerT, uint nrepeats = 3, uint nwarmups = 1)
-    -> TimeIt<TargetT_, TimerT>;
+TimeIt(
+    TargetT_&& target, TimerT, uint nrepeats, uint nwarmups) -> TimeIt<TargetT_, TimerT>;
 
 }  // namespace dt
 
